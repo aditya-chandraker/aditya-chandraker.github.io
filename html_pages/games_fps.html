@@ -10,7 +10,7 @@
 
 <body>
 	<div id="info">
-		Octree threejs demo - basic collisions with static triangle mesh<br />
+		Walk into Adi's life<br />
 		MOUSE to look around and to throw balls<br />
 		WASD to move and SPACE to jump
 	</div>
@@ -415,7 +415,7 @@
 
 		const loader = new GLTFLoader().setPath('../assets/');
 
-		loader.load('collision-world-with-plane.glb', (gltf) => {
+		loader.load('v1.glb', (gltf) => {
 
 			scene.add(gltf.scene);
 
@@ -438,17 +438,17 @@
 
 			});
 
-			const helper = new OctreeHelper(worldOctree);
-			helper.visible = false;
-			scene.add(helper);
+			// const helper = new OctreeHelper(worldOctree);
+			// helper.visible = false;
+			// scene.add(helper);
 
-			const gui = new GUI({ width: 200 });
-			gui.add({ debug: false }, 'debug')
-				.onChange(function (value) {
+			// const gui = new GUI({ width: 200 });
+			// gui.add({ debug: false }, 'debug')
+			// 	.onChange(function (value) {
 
-					helper.visible = value;
+			// 		helper.visible = value;
 
-				});
+			// 	});
 
 			animate();
 
