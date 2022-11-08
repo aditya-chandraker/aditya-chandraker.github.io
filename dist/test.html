@@ -5,7 +5,7 @@
 	<title>three.js - misc - octree collisions</title>
 	<meta charset=utf-8 />
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<link type="text/css" rel="stylesheet" href="../css/main.css">
+	<link type="text/css" rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
@@ -23,8 +23,8 @@
 	<script type="importmap">
 			{
 				"imports": {
-					"three": "../js/three.module.js",
-					"three/addons/": "../js/jsm/"
+					"three": "./js/three.module.js",
+					"three/addons/": "./js/jsm/"
 				}
 			}
 		</script>
@@ -47,8 +47,8 @@
 		const clock = new THREE.Clock();
 
 		const scene = new THREE.Scene();
-		scene.background = new THREE.Color(0x88ccee);
-		scene.fog = new THREE.Fog(0x88ccee, 0, 50);
+		scene.background = new THREE.Color(0x000000);
+		scene.fog = new THREE.Fog(0xffffff, 0, 50);
 
 		const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
 		camera.rotation.order = 'YXZ';
@@ -88,7 +88,7 @@
 		stats.domElement.style.top = '0px';
 		container.appendChild(stats.domElement);
 
-		const GRAVITY = 30;
+		const GRAVITY = 50;
 
 		const NUM_SPHERES = 100;
 		const SPHERE_RADIUS = 0.2;
@@ -413,9 +413,62 @@
 
 		}
 
-		const loader = new GLTFLoader().setPath('../assets/');
+		const loader = new GLTFLoader().setPath('assets/');
 
-		loader.load('v1.glb', (gltf) => {
+		// loader.load('v1.glb', (gltf) => {
+
+		// 	scene.add(gltf.scene);
+
+		// 	worldOctree.fromGraphNode(gltf.scene);
+
+		// 	gltf.scene.traverse(child => {
+
+		// 		if (child.isMesh) {
+
+		// 			child.castShadow = true;
+		// 			child.receiveShadow = true;
+
+		// 			if (child.material.map) {
+
+		// 				child.material.map.anisotropy = 4;
+
+		// 			}
+
+		// 		}
+
+		// 	});
+
+		// 	// const helper = new OctreeHelper(worldOctree);
+		// 	// helper.visible = false;
+		// 	// scene.add(helper);
+
+		// 	// const gui = new GUI({ width: 200 });
+		// 	// gui.add({ debug: false }, 'debug')
+		// 	// 	.onChange(function (value) {
+
+		// 	// 		helper.visible = value;
+
+		// 	// 	});
+
+		// 	// animate();
+
+		// });
+
+		function teleportPlayerIfOob() {
+
+			if (camera.position.y <= - 25) {
+
+				playerCollider.start.set(0, 0.35, 0);
+				playerCollider.end.set(0, 1, 0);
+				playerCollider.radius = 0.35;
+				camera.position.copy(playerCollider.end);
+				camera.rotation.set(0, 0, 0);
+
+			}
+
+		}
+
+		loader.load('house.glb', (gltf) => {
 
 			scene.add(gltf.scene);
 
@@ -453,20 +506,6 @@
 			animate();
 
 		});
-
-		function teleportPlayerIfOob() {
-
-			if (camera.position.y <= - 25) {
-
-				playerCollider.start.set(0, 0.35, 0);
-				playerCollider.end.set(0, 1, 0);
-				playerCollider.radius = 0.35;
-				camera.position.copy(playerCollider.end);
-				camera.rotation.set(0, 0, 0);
-
-			}
-
-		}
 
 
 		function animate() {
