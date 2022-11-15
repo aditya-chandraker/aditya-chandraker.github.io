@@ -114,28 +114,31 @@
         const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.rotation.order = 'YXZ';
 
-        const fillLight1 = new THREE.HemisphereLight(0x4488bb, 0x002244, 0.5);
-        fillLight1.position.set(2, 1, 1);
-        scene.add(fillLight1);
+        // const fillLight1 = new THREE.HemisphereLight(0x4488bb, 0x002244, 0.5);
+        // fillLight1.position.set(0,0,10);
+        // scene.add(fillLight1);
 
 
-        // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        // directionalLight.position.set(- 5, 25, - 1);
-        // directionalLight.castShadow = true;
-        // directionalLight.shadow.camera.near = 0.01;
-        // directionalLight.shadow.camera.far = 500;
-        // directionalLight.shadow.camera.right = 30;
-        // directionalLight.shadow.camera.left = - 30;
-        // directionalLight.shadow.camera.top = 30;
-        // directionalLight.shadow.camera.bottom = - 30;
-        // directionalLight.shadow.mapSize.width = 1024;
-        // directionalLight.shadow.mapSize.height = 1024;
-        // directionalLight.shadow.radius = 4;
-        // directionalLight.shadow.bias = - 0.00006;
-        // scene.add(directionalLight);
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
 
-        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight2.position.set(1, 1, 1);
+        const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.4);
+        directionalLight1.position.set(1, 0, 0);
+        directionalLight1.castShadow = true;
+        directionalLight1.shadow.camera.near = 0.01;
+        directionalLight1.shadow.camera.far = 500;
+        directionalLight1.shadow.camera.right = 30;
+        directionalLight1.shadow.camera.left = - 30;
+        directionalLight1.shadow.camera.top = 30;
+        directionalLight1.shadow.camera.bottom = - 30;
+        directionalLight1.shadow.mapSize.width = 1024;
+        directionalLight1.shadow.mapSize.height = 1024;
+        directionalLight1.shadow.radius = 4;
+        directionalLight1.shadow.bias = - 0.00006;
+        scene.add(directionalLight1);
+
+        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4);
+        directionalLight2.position.set(0, 3, 0);
         directionalLight2.castShadow = true;
         directionalLight2.shadow.camera.near = 0.01;
         directionalLight2.shadow.camera.far = 500;
@@ -148,6 +151,32 @@
         directionalLight2.shadow.radius = 4;
         directionalLight2.shadow.bias = - 0.00006;
         scene.add(directionalLight2);
+
+        const directionalLight3 = new THREE.DirectionalLight(0xffffff, 0.4);
+        directionalLight3.position.set(1, 1, 1);
+        directionalLight3.castShadow = true;
+        directionalLight3.shadow.camera.near = 0.01;
+        directionalLight3.shadow.camera.far = 500;
+        directionalLight3.shadow.camera.right = 30;
+        directionalLight3.shadow.camera.left = - 30;
+        directionalLight3.shadow.camera.top = 30;
+        directionalLight3.shadow.camera.bottom = - 30;
+        directionalLight3.shadow.mapSize.width = 1024;
+        directionalLight3.shadow.mapSize.height = 1024;
+        directionalLight3.shadow.radius = 4;
+        directionalLight3.shadow.bias = - 0.00006;
+        scene.add(directionalLight3);
+
+        const fillLight1 = new THREE.HemisphereLight(0x4488bb, 0x002244, 0.2);
+        fillLight1.position.set(0, 0, 0);
+        scene.add(fillLight1);
+
+        // It is also possible to set the target to be another object in the scene (anything with a position property), like so:
+
+        // const targetObject = new THREE.Object3D();
+        // scene.add(targetObject);
+
+        // light.target = targetObject;
 
         const container = document.getElementById('container');
 
