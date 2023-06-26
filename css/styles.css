@@ -4022,8 +4022,6 @@ textarea.form-control-lg {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 .navbar > .container,
 .navbar > .container-fluid,
@@ -11276,10 +11274,9 @@ textarea.form-control-lg {
   }
 }
 
-/* body {
-  background: url("../assets/rocket_takeoff.png") no-repeat center center fixed;
-  background-size: cover;
-} */
+body {
+  background-color: #000;
+}
 
 body {
 	margin: 0;
@@ -11349,4 +11346,64 @@ body {
 	background-color: #f00;
 	margin-top: 20px;
 	padding: 10px;
+}
+
+.image-container {
+  background-image: url("https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"); /* The image used - important! */
+  background-size: cover;
+  position: relative; /* Needed to position the cutout text in the middle of the image */
+  height: 300px; /* Some height */
+}
+
+.text {
+  background-color: white;
+  color: black;
+  font-size: 5vw; /* Responsive font size */
+  font-weight: bold;
+  margin: 0 auto; /* Center the text container */
+  padding: 10px;
+  width: 50%;
+  text-align: center; /* Center text */
+  position: absolute; /* Position text */
+  top: 50%; /* Position text in the middle */
+  left: 50%; /* Position text in the middle */
+  transform: translate(-50%, -50%); /* Position text in the middle */
+  mix-blend-mode: screen; /* This makes the cutout text possible */
+}
+
+.controls {
+  position: fixed;
+  bottom: 50px;
+  left: 20px;
+}
+
+.controls button {
+  width: 10vw;
+  height: 10vw;
+  font-size: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.controls button#up {
+  margin-bottom: 3px;
+  margin-left: 25px;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+#trackpad {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
 }

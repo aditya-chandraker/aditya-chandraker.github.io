@@ -15,8 +15,9 @@
 <body>
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand fw-bold" href="#!" onclick="document.getElementById('container').style.display='none'">Adi</a>
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#!"
+                onclick="document.getElementById('container').style.display='none'">Adi</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
                     class="navbar-toggler-icon"></span></button>
@@ -25,26 +26,33 @@
                     <li class="nav-item"><a class="nav-link" href="#"
                             onclick="document.getElementById('container').style.display='block'">World</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="https://drive.google.com/file/d/1IJ4miJPTF4qBXxDZbcuQA9sNh6vBLmD_/view?usp=sharing">Resume</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link"
+                            href="https://drive.google.com/file/d/1IJ4miJPTF4qBXxDZbcuQA9sNh6vBLmD_/view?usp=sharing">Resume</a>
+                    </li> -->
                 </ul>
             </div>
 
         </div>
     </nav>
-    <!-- Page Content-->
 
-    <div class="container py-4">
-        <div class="p-5 mb-4 bg-light rounded-3">
-            <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">I am Adi</h1>
-            </div>
-        </div>
-    </div>
+    <!-- Page Content-->
+    <canvas id="myCanvas" style="position: fixed; top: 0; left: 0;"></canvas>
+    <div class="text" class="display-5 fw-bold" style="background: rgb(255, 255, 255, .1); color: white;">I am Adi</div>
+
 
     <!-- Bootstrap core JS-->
     <script src="js/bootstrap.bundle.min.js"></script>
 
     <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        ctx.fillStyle = 'rgba(77, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
         function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
             setInterval(function () {
@@ -68,15 +76,21 @@
         };
     </script>
 
-    <div style="position:absolute; top:0; right:1vw;z-index: 20;color: white"><span id="time">07:00</span></div>
+    <!-- canvas for 3 js -->
+    <div id="container" style="position:absolute; top:0; left:0;z-index: 10; display:none" class="fade-in">
+        <div class="controls mobile-only" style="z-index: 30">
+            <div><button id="up">W</button></div>
 
-    <div id="info">
-        Walk into Adi's life<br />
-        MOUSE to look around and to throw balls<br />
-        WASD to move and SPACE to jump
-        Esc to exit
+            <div>
+                <button id="left">A</button>
+                <button id="down">S</button>
+                <button id="right">D</button>
+                <button id="space" style="margin-left: 30px; width: 50vw;">space</button>
+            </div>
+        </div>
+
+        <div style="position:absolute; top:0; right:1vw;z-index: 20;color: white"><span id="time">07:00</span></div>
     </div>
-    <div id="container" style="position:absolute; top:0; left:0;z-index: 10; display:none"></div>
 
     <!-- Import maps polyfill -->
     <!-- Remove this when import maps will be widely supported -->
@@ -252,6 +266,32 @@
 
         });
 
+        document.addEventListener('click', (event) => {
+            const tagName = event.target.tagName.toLowerCase();
+            console.log(tagName);
+            switch (tagName) {
+                case 'button':
+                    switch (event.target.id) {
+                        case 'up':
+                            playerVelocity.z = -10;
+                            break;
+                        case 'left':
+                            playerVelocity.x = -10;
+                            break;
+                        case 'down':
+                            playerVelocity.z = 10;
+                            break;
+                        case 'right':
+                            playerVelocity.x = 10;
+                            break;
+                        case 'space':
+                            playerVelocity.y = 30;
+                            break;
+                    }
+                    break;
+            }
+        });
+
         container.addEventListener('mousedown', () => {
 
             document.body.requestPointerLock();
@@ -276,6 +316,44 @@
             }
 
         });
+
+        // const trackpad = document.getElementById('trackpad');
+        // const trackpadRect = trackpad.getBoundingClientRect();
+        // const trackpadCenter = {
+        //     x: trackpadRect.left + trackpadRect.width / 2,
+        //     y: trackpadRect.top + trackpadRect.height / 2,
+        // };
+        // const trackpadRadius = trackpadRect.width / 2;
+        // const maxTrackpadDistance = trackpadRadius * 0.8;
+        // const trackpadDirection = new THREE.Vector2();
+
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchMoveX = 0;
+        let touchMoveY = 0;
+
+        container.addEventListener('touchstart', () => {
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+        });
+
+        document.addEventListener('touchmove', (event) => {
+            touchMoveX = event.touches[0].clientX;
+            touchMoveY = event.touches[0].clientY;
+            const deltaX = touchMoveX - touchStartX;
+            const deltaY = touchMoveY - touchStartY;
+            camera.rotation.y -= deltaX / 2500;
+            camera.rotation.x -= deltaY / 2500;
+        });
+
+        // document.addEventListener('touchend', () => {
+        //     const deltaX = touchMoveX - touchStartX;
+        //     const deltaY = touchMoveY - touchStartY;
+        //     camera.rotation.y -= deltaX / 500;
+        //     camera.rotation.x -= deltaY / 500;
+        // });
+
+
 
         window.addEventListener('resize', onWindowResize);
 
@@ -604,7 +682,19 @@
 
         }
 
+
+        container.style.display = 'block';
+        container.style.opacity = 0;
+        const fadeIn = setInterval(() => {
+            container.style.opacity = Number(container.style.opacity) + 0.1;
+            if (container.style.opacity >= 1) {
+                clearInterval(fadeIn);
+            }
+        }, 100);
+
+
     </script>
+
 
 </body>
 
