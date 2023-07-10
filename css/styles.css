@@ -11373,7 +11373,7 @@ body {
 
 .controls {
   position: fixed;
-  bottom: 50px;
+  bottom: 20px;
   left: 20px;
 }
 
@@ -11396,14 +11396,4 @@ body {
   .mobile-only {
     display: none;
   }
-}
-
-#trackpad {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
 }

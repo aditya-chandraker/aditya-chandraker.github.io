@@ -13,28 +13,6 @@
 </head>
 
 <body>
-    <!-- Navigation-->
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-bottom">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="#!"
-                onclick="document.getElementById('container').style.display='none'">Adi</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
-                    class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#"
-                            onclick="document.getElementById('container').style.display='block'">World</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link"
-                            href="https://drive.google.com/file/d/1IJ4miJPTF4qBXxDZbcuQA9sNh6vBLmD_/view?usp=sharing">Resume</a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-    </nav> -->
-
     <!-- Page Content-->
     <canvas id="myCanvas" style="position: fixed; top: 0; left: 0;"></canvas>
     <div class="text" class="display-5 fw-bold" style="background: rgb(255, 255, 255, .1); color: white;">I am Adi</div>
@@ -107,6 +85,7 @@
 
     <script type="module">
 
+        // imports -----------------------------------------------------------------------------------
         import * as THREE from 'three';
 
         import Stats from 'three/addons/libs/stats.module.js';
@@ -120,102 +99,82 @@
 
         import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 
+        // variables --------------------------------------------------------------------------------
         const clock = new THREE.Clock();
 
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x000000);
-        scene.fog = new THREE.Fog(0xffffff, 0, 50);
+        scene.fog = new THREE.Fog(0x0f0f0f, 0, 50);
 
         const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.rotation.order = 'YXZ';
 
-        // const fillLight1 = new THREE.HemisphereLight(0x4488bb, 0x002244, 0.5);
-        // fillLight1.position.set(0,0,10);
-        // scene.add(fillLight1);
-
-
         const axesHelper = new THREE.AxesHelper(5);
         scene.add(axesHelper);
 
-        // const directionalLight1 = new THREE.DirectionalLight(0xffffff, 0.4);
-        // directionalLight1.position.set(1, 0, 0);
-        // directionalLight1.castShadow = true;
-        // directionalLight1.shadow.camera.near = 0.01;
-        // directionalLight1.shadow.camera.far = 500;
-        // directionalLight1.shadow.camera.right = 30;
-        // directionalLight1.shadow.camera.left = - 30;
-        // directionalLight1.shadow.camera.top = 30;
-        // directionalLight1.shadow.camera.bottom = - 30;
-        // directionalLight1.shadow.mapSize.width = 1024;
-        // directionalLight1.shadow.mapSize.height = 1024;
-        // directionalLight1.shadow.radius = 4;
-        // directionalLight1.shadow.bias = - 0.00006;
-        // scene.add(directionalLight1);
-
-        // const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.2);
-        // directionalLight2.position.set(0, 1, 0);
-        // directionalLight2.castShadow = true;
-        // directionalLight2.shadow.camera.near = 0.01;
-        // directionalLight2.shadow.camera.far = 500;
-        // directionalLight2.shadow.camera.right = 30;
-        // directionalLight2.shadow.camera.left = - 30;
-        // directionalLight2.shadow.camera.top = 30;
-        // directionalLight2.shadow.camera.bottom = - 30;
-        // directionalLight2.shadow.mapSize.width = 1024;
-        // directionalLight2.shadow.mapSize.height = 1024;
-        // directionalLight2.shadow.radius = 4;
-        // directionalLight2.shadow.bias = - 0.00006;
-        // scene.add(directionalLight2);
-
-        // const directionalLight3 = new THREE.DirectionalLight(0xffffff, 0.4);
-        // directionalLight3.position.set(1, 1, 1);
-        // directionalLight3.castShadow = true;
-        // directionalLight3.shadow.camera.near = 0.01;
-        // directionalLight3.shadow.camera.far = 500;
-        // directionalLight3.shadow.camera.right = 30;
-        // directionalLight3.shadow.camera.left = - 30;
-        // directionalLight3.shadow.camera.top = 30;
-        // directionalLight3.shadow.camera.bottom = - 30;
-        // directionalLight3.shadow.mapSize.width = 1024;
-        // directionalLight3.shadow.mapSize.height = 1024;
-        // directionalLight3.shadow.radius = 4;
-        // directionalLight3.shadow.bias = - 0.00006;
-        // scene.add(directionalLight3);
-
-        // const fillLight1 = new THREE.HemisphereLight(0x4488bb, 0x002244, 0.2);
-        // fillLight1.position.set(0, 0, 0);
-        // scene.add(fillLight1);
-
-
-        // It is also possible to set the target to be another object in the scene (anything with a position property), like so:
-
-        // const targetObject = new THREE.Object3D();
-        // scene.add(targetObject);
-
-        // light.target = targetObject;
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // color, intensity
-        scene.add(ambientLight);
-
-
-
         const container = document.getElementById('container');
+
+        const stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.top = '0px';
+        container.appendChild(stats.domElement);
+
+        // lights -----------------------------------------------------------------------------------
+        const pointlights = [];
+
+        const pointlight1 = new THREE.PointLight(0xffffff, 5, 100);
+        pointlight1.position.set(-0.6, 4, 0); // xyz
+        pointlights.push(pointlight1);
+
+        const pointlight2 = new THREE.PointLight(0xffffff, 5, 100);
+        pointlight2.position.set(5, 4, -6.6);
+        pointlights.push(pointlight2);
+
+        const pointlight3 = new THREE.PointLight(0xffffff, 5, 100);
+        pointlight3.position.set(21, 4, -2);
+        pointlights.push(pointlight3);
+
+        const pointlight4 = new THREE.PointLight(0xffffff, 5, 100);
+        pointlight4.position.set(16, 4, -12);
+        pointlights.push(pointlight4);
+
+        for (let i = 0; i < pointlights.length; i++) {
+            pointlights[i].castShadow = true;
+            pointlights[i].shadow.camera.near = 0.01;
+            pointlights[i].shadow.camera.far = 500;
+            pointlights[i].shadow.camera.right = 30;
+            pointlights[i].shadow.camera.left = -30;
+            pointlights[i].shadow.camera.top = 30;
+            pointlights[i].shadow.camera.bottom = -30;
+            pointlights[i].shadow.mapSize.width = 1024;
+            pointlights[i].shadow.mapSize.height = 1024;
+            pointlights[i].shadow.radius = 4;
+            pointlights[i].shadow.bias = -0.00006;
+            // pointlights[i].display = none;
+            pointlights[i].visible = false;
+            scene.add(pointlights[i]);
+        }
+
+        pointlights[0].visible = true;
+
+        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // color, intensity
+        // scene.add(ambientLight);
+
+
+        // renderer ---------------------------------------------------------------------------------
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.VSMShadowMap;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap; // THREE.VSMShadowMap;
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.physicallyCorrectLights = true;
         renderer.gammaFactor = 2.2;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         container.appendChild(renderer.domElement);
 
-        const stats = new Stats();
-        stats.domElement.style.position = 'absolute';
-        stats.domElement.style.top = '0px';
-        container.appendChild(stats.domElement);
+        // balls ------------------------------------------------------------------------------------
 
         const GRAVITY = 50;
 
@@ -262,6 +221,28 @@
         const vector2 = new THREE.Vector3();
         const vector3 = new THREE.Vector3();
 
+        function throwBall() {
+
+            const sphere = spheres[sphereIdx];
+
+            camera.getWorldDirection(playerDirection);
+
+            sphere.collider.center.copy(playerCollider.end).addScaledVector(playerDirection, playerCollider.radius * 1.5);
+
+            // throw the ball with more force if we hold the button longer, and if we move forward
+
+            const impulse = 15 + 30 * (1 - Math.exp((mouseTime - performance.now()) * 0.001));
+
+            sphere.velocity.copy(playerDirection).multiplyScalar(impulse);
+            sphere.velocity.addScaledVector(playerVelocity, 2);
+
+            sphereIdx = (sphereIdx + 1) % spheres.length;
+
+        }
+
+
+        // gui --------------------------------------------------------------------------------------
+
         document.addEventListener('keydown', (event) => {
 
             keyStates[event.code] = true;
@@ -281,16 +262,16 @@
                 case 'button':
                     switch (event.target.id) {
                         case 'up':
-                            playerVelocity.z = -10;
+                            playerVelocity.add(getForwardVector().multiplyScalar(5));
                             break;
                         case 'left':
-                            playerVelocity.x = -10;
+                            playerVelocity.add(getSideVector().multiplyScalar(- 5));
                             break;
                         case 'down':
-                            playerVelocity.z = 10;
+                            playerVelocity.add(getForwardVector().multiplyScalar(- 5));
                             break;
                         case 'right':
-                            playerVelocity.x = 10;
+                            playerVelocity.add(getSideVector().multiplyScalar(5));
                             break;
                         case 'space':
                             playerVelocity.y = 30;
@@ -299,6 +280,7 @@
                     break;
             }
         });
+
 
         container.addEventListener('mousedown', () => {
 
@@ -310,7 +292,8 @@
 
         document.addEventListener('mouseup', () => {
 
-            if (document.pointerLockElement !== null) throwBall();
+            // checks if its just a tap and if the screen is mobile
+            if (document.pointerLockElement !== null && !window.matchMedia('(max-width: 767px)').matches) throwBall();
 
         });
 
@@ -325,15 +308,6 @@
 
         });
 
-        // const trackpad = document.getElementById('trackpad');
-        // const trackpadRect = trackpad.getBoundingClientRect();
-        // const trackpadCenter = {
-        //     x: trackpadRect.left + trackpadRect.width / 2,
-        //     y: trackpadRect.top + trackpadRect.height / 2,
-        // };
-        // const trackpadRadius = trackpadRect.width / 2;
-        // const maxTrackpadDistance = trackpadRadius * 0.8;
-        // const trackpadDirection = new THREE.Vector2();
 
         let touchStartX = 0;
         let touchStartY = 0;
@@ -355,13 +329,11 @@
         });
 
         // document.addEventListener('touchend', () => {
-        //     const deltaX = touchMoveX - touchStartX;
-        //     const deltaY = touchMoveY - touchStartY;
-        //     camera.rotation.y -= deltaX / 500;
-        //     camera.rotation.x -= deltaY / 500;
+        //     // checks if its just a tap and if the screen is mobile
+        //     if (Math.abs(touchMoveX - touchStartX) < 10 && Math.abs(touchMoveY - touchStartY) < 10 && window.matchMedia('(max-width: 767px)').matches) throwBall();
         // });
 
-
+        // Resize ------------------------------------------------------------------------------------
 
         window.addEventListener('resize', onWindowResize);
 
@@ -374,24 +346,8 @@
 
         }
 
-        function throwBall() {
 
-            const sphere = spheres[sphereIdx];
-
-            camera.getWorldDirection(playerDirection);
-
-            sphere.collider.center.copy(playerCollider.end).addScaledVector(playerDirection, playerCollider.radius * 1.5);
-
-            // throw the ball with more force if we hold the button longer, and if we move forward
-
-            const impulse = 15 + 30 * (1 - Math.exp((mouseTime - performance.now()) * 0.001));
-
-            sphere.velocity.copy(playerDirection).multiplyScalar(impulse);
-            sphere.velocity.addScaledVector(playerVelocity, 2);
-
-            sphereIdx = (sphereIdx + 1) % spheres.length;
-
-        }
+        // Player Interactions -----------------------------------------------------------------------
 
         function playerCollisions() {
 
@@ -544,6 +500,8 @@
 
         }
 
+        // Game Physics Functions --------------------------------------------------------------------
+
         function getForwardVector() {
 
             camera.getWorldDirection(playerDirection);
@@ -621,9 +579,11 @@
 
         }
 
+        // load the house model ----------------------------------------------------------------------
+
         const loader = new GLTFLoader().setPath('assets/');
 
-        loader.load('house.glb', (gltf) => {
+        loader.load('houseNoLight.glb', (gltf) => {
 
             scene.add(gltf.scene);
 
@@ -633,7 +593,7 @@
 
                 if (child.isMesh) {
 
-                    // child.castShadow = true;
+                    child.castShadow = true;
                     child.receiveShadow = true;
 
                     if (child.material.map) {
@@ -644,31 +604,31 @@
 
                 }
 
-                if (child.isLight) {
-                    child.castShadow = true;
-                    // child.shadow.camera.near = 0.01;
-                    // child.shadow.camera.far = 500;
-                    // child.shadow.camera.right = 30;
-                    // child.shadow.camera.left = - 30;
-                    // child.shadow.camera.top = 30;
-                    // child.shadow.camera.bottom = - 30;
-                    // child.shadow.mapSize.width = 1024;
-                    // child.shadow.mapSize.height = 1024;
-                    child.shadow.radius = 4;
-                    child.shadow.bias = - 0.00006;
-                    child.castShadow = true;
-                    // child.shadow.camera.near = 0.01;
-                    // child.shadow.camera.far = 500;
-                    child.shadow.camera.right = 1;
-                    child.shadow.camera.left = - 1;
-                    child.shadow.camera.top = 1;
-                    child.shadow.camera.bottom = - 1;
-                    // child.shadow.mapSize.width = 1024;
-                    // child.shadow.mapSize.height = 1024;
-                    child.shadow.bias = - 0.00006;
-                    // child.shadow.camera.updateProjectionMatrix();
-                    // child.shadow.blurSamples = 25
-                }
+                // if (child.isLight) {
+                //     // child.castShadow = true;
+                //     // child.shadow.camera.near = 0.01;
+                //     // child.shadow.camera.far = 500;
+                //     // child.shadow.camera.right = 30;
+                //     // child.shadow.camera.left = - 30;
+                //     // child.shadow.camera.top = 30;
+                //     // child.shadow.camera.bottom = - 30;
+                //     // child.shadow.mapSize.width = 1024;
+                //     // child.shadow.mapSize.height = 1024;
+                //     child.shadow.radius = 4;
+                //     child.shadow.bias = - 0.00006;
+                //     child.castShadow = true;
+                //     // child.shadow.camera.near = 0.01;
+                //     // child.shadow.camera.far = 500;
+                //     child.shadow.camera.right = 1;
+                //     child.shadow.camera.left = - 1;
+                //     child.shadow.camera.top = 1;
+                //     child.shadow.camera.bottom = - 1;
+                //     // child.shadow.mapSize.width = 1024;
+                //     // child.shadow.mapSize.height = 1024;
+                //     child.shadow.bias = - 0.00006;
+                //     // child.shadow.camera.updateProjectionMatrix();
+                //     // child.shadow.blurSamples = 25
+                // }
 
             });
 
@@ -689,6 +649,20 @@
         });
 
 
+        const cameraDistanceThreshold = 8; // Change this to the desired distance threshold
+
+        function updateLights() {
+            // Update the camera and other objects in the scene
+
+            const cameraPosition = camera.position;
+
+            for (let i = 0; i < pointlights.length; i++) {
+                const pointlight = pointlights[i];
+                const distance = cameraPosition.distanceTo(pointlight.position);
+                pointlight.visible = distance < cameraDistanceThreshold;
+            }
+        }
+
         function animate() {
 
             const deltaTime = Math.min(0.05, clock.getDelta()) / STEPS_PER_FRAME;
@@ -706,6 +680,8 @@
 
                 teleportPlayerIfOob();
 
+                updateLights()
+
             }
 
             renderer.render(scene, camera);
@@ -717,6 +693,7 @@
         }
 
 
+        // Fade in ----------------------------------------------------------------------------------
         container.style.display = 'block';
         container.style.opacity = 0;
         const fadeIn = setInterval(() => {
