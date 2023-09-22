@@ -157,8 +157,8 @@
 
         pointlights[0].visible = true;
 
-        // const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // color, intensity
-        // scene.add(ambientLight);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // color, intensity
+        scene.add(ambientLight);
 
 
         // renderer ---------------------------------------------------------------------------------
@@ -526,7 +526,7 @@
         function controls(deltaTime) {
 
             // gives a bit of air control
-            const speedDelta = deltaTime * (playerOnFloor ? 25 : 8);
+            const speedDelta = deltaTime * (playerOnFloor ? 15 : 8);
 
             if (keyStates['KeyW']) {
 
@@ -592,9 +592,19 @@
             gltf.scene.traverse(child => {
 
                 if (child.isMesh) {
+                    // console.log(child);
 
-                    child.castShadow = true;
-                    child.receiveShadow = true;
+                    if (child.name.includes('text') ||
+                        child.name.includes('picture') ||
+                        child.name.includes('house') ||
+                        child.name.includes('floor') ||
+                        child.name.includes('bed')) {
+                        child.castShadow = false;
+                    } else { child.castShadow = true; }
+
+                    if (false) {
+                        child.receiveShadow = false;
+                    } else { child.receiveShadow = true; }
 
                     if (child.material.map) {
 
@@ -680,7 +690,7 @@
 
                 teleportPlayerIfOob();
 
-                updateLights()
+                updateLights();
 
             }
 
@@ -691,7 +701,6 @@
             requestAnimationFrame(animate);
 
         }
-
 
         // Fade in ----------------------------------------------------------------------------------
         container.style.display = 'block';
