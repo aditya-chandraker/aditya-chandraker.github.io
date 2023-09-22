@@ -1,0 +1,24 @@
+{
+  "name": "aditya-chandraker.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aditya-chandraker/aditya-chandraker.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aditya-chandraker/aditya-chandraker.github.io/issues"
+  },
+  "homepage": "https://github.com/aditya-chandraker/aditya-chandraker.github.io#readme",
+  "dependencies": {
+    "gh-pages": "^4.0.0",
+    "three": "^0.146.0"
+  }
+}
