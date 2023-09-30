@@ -109,7 +109,7 @@
         const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.rotation.order = 'YXZ';
 
-        const axesHelper = new THREE.AxesHelper(5);
+        const axesHelper = new THREE.AxesHelper(115);
         scene.add(axesHelper);
 
         const container = document.getElementById('container');
@@ -673,6 +673,15 @@
             }
         }
 
+        function checkpoint() {
+            console.log(camera.position)
+            if(camera.position.y > .8 && camera.position.x < -3 && camera.position.z < -5){
+                
+            }
+        }
+
+        var frame_i = 0
+
         function animate() {
 
             const deltaTime = Math.min(0.05, clock.getDelta()) / STEPS_PER_FRAME;
@@ -688,11 +697,16 @@
 
                 updateSpheres(deltaTime);
 
-                teleportPlayerIfOob();
-
-                updateLights();
-
             }
+
+            if (frame_i % 30 == 0) {
+                teleportPlayerIfOob();
+                updateLights();
+                checkpoint();
+            }
+
+
+            frame_i += 1;
 
             renderer.render(scene, camera);
 
