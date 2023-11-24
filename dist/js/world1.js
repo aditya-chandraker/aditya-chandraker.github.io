@@ -237,9 +237,9 @@ document.addEventListener("mouseup", () => {
   // checks if its just a tap and if the screen is mobile
   if (
     document.pointerLockElement !== null &&
-    !window.matchMedia("(max-width: 767px)").matches
+      !window.matchMedia("(max-width: 767px)").matches
   )
-    throwBall();
+  throwBall();
 });
 
 document.body.addEventListener("mousemove", (event) => {
@@ -327,8 +327,8 @@ function updatePlayer(deltaTime) {
 
 function playerSphereCollision(sphere) {
   const center = vector1
-    .addVectors(playerCollider.start, playerCollider.end)
-    .multiplyScalar(0.5);
+  .addVectors(playerCollider.start, playerCollider.end)
+  .multiplyScalar(0.5);
 
   const sphere_center = sphere.collider.center;
 
@@ -343,11 +343,11 @@ function playerSphereCollision(sphere) {
     if (d2 < r2) {
       const normal = vector1.subVectors(point, sphere_center).normalize();
       const v1 = vector2
-        .copy(normal)
-        .multiplyScalar(normal.dot(playerVelocity));
+      .copy(normal)
+      .multiplyScalar(normal.dot(playerVelocity));
       const v2 = vector3
-        .copy(normal)
-        .multiplyScalar(normal.dot(sphere.velocity));
+      .copy(normal)
+      .multiplyScalar(normal.dot(sphere.velocity));
 
       playerVelocity.add(v2).sub(v1);
       sphere.velocity.add(v1).sub(v2);
@@ -371,8 +371,8 @@ function spheresCollisions() {
 
       if (d2 < r2) {
         const normal = vector1
-          .subVectors(s1.collider.center, s2.collider.center)
-          .normalize();
+        .subVectors(s1.collider.center, s2.collider.center)
+        .normalize();
         const v1 = vector2.copy(normal).multiplyScalar(normal.dot(s1.velocity));
         const v2 = vector3.copy(normal).multiplyScalar(normal.dot(s2.velocity));
 
@@ -488,10 +488,10 @@ loader.load("houseNoLight.glb", (gltf) => {
 
       if (
         child.name.includes("text") ||
-        child.name.includes("picture") ||
-        child.name.includes("house") ||
-        child.name.includes("floor") ||
-        child.name.includes("bed")
+          child.name.includes("picture") ||
+          child.name.includes("house") ||
+          child.name.includes("floor") ||
+          child.name.includes("bed")
       ) {
         child.castShadow = false;
       } else {
@@ -569,8 +569,8 @@ function checkpoint() {
   console.log(camera.position);
   if (
     camera.position.y > 0.8 &&
-    camera.position.x < -3 &&
-    camera.position.z < -5
+      camera.position.x < -3 &&
+      camera.position.z < -5
   ) {
   }
 }
