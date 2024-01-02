@@ -75,7 +75,7 @@ for (let i = 0; i < pointlights.length; i++) {
 
 pointlights[0].visible = true;
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.1); // color, intensity
+const ambientLight = new THREE.AmbientLight(0x999999, 5); // color, intensity
 scene.add(ambientLight);
 
 // portal test
@@ -477,7 +477,8 @@ function teleportPlayerIfOob() {
 
 const loader = new GLTFLoader().setPath("assets/");
 
-loader.load("houseNoLight.glb", (gltf) => {
+// loader.load("houseNoLight.glb", (gltf) => {
+ loader.load("house_projects.glb", (gltf) => {
   scene.add(gltf.scene);
 
   worldOctree.fromGraphNode(gltf.scene);
@@ -599,11 +600,17 @@ function animate() {
 
   frame_i += 1;
 
-  renderer.render(scene, camera);
 
   stats.update();
 
-  requestAnimationFrame(animate);
+  setTimeout( function() {
+
+    requestAnimationFrame( animate );
+
+  }, 1000 / 28 );
+
+  renderer.render(scene, camera);
+
 }
 
 // Fade in ----------------------------------------------------------------------------------
