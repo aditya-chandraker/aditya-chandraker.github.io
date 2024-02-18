@@ -75,7 +75,7 @@ for (let i = 0; i < pointlights.length; i++) {
 
 pointlights[0].visible = true;
 
-const ambientLight = new THREE.AmbientLight(0x999999, 5); // color, intensity
+const ambientLight = new THREE.AmbientLight(0x999999, .5); // color, intensity
 scene.add(ambientLight);
 
 // portal test
